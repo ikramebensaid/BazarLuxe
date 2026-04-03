@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BazarLuxe – Produits Territoriaux Drâa-Tafilalet</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --sand: #C9A96E;
+      --deep-sand: #A07840;
+      --terracotta: #B85C38;
+      --dark: #1A1207;
+      --light: #FAF5ED;
+      --muted: #7A6850;
+      --card-bg: #FFFDF7;
+      --border: #E8DCC8;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Lato', sans-serif; background: var(--light); color: var(--dark); }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--dark);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2.5rem; height: 64px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.35);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; color: var(--sand); letter-spacing: 2px;
+    }
+    .nav-logo span { color: var(--terracotta); font-style: italic; }
+    .nav-links { display: flex; gap: 1.8rem; list-style: none; }
+    .nav-links a { color: #e0d4b8; text-decoration: none; font-size: .87rem; letter-spacing: .8px; text-transform: uppercase; transition: color .2s; }
+    .nav-links a:hover { color: var(--sand); }
+    .nav-right { display: flex; align-items: center; gap: 1.2rem; }
+    .cart-btn {
+      background: var(--terracotta); color: #fff;
+      border: none; border-radius: 4px; padding: .45rem 1.1rem;
+      font-size: .85rem; cursor: pointer; display: flex; align-items: center; gap: .5rem;
+      transition: background .2s;
+    }
+    .cart-btn:hover { background: #9a4a2a; }
+    .cart-count {
+      background: var(--sand); color: var(--dark);
+      border-radius: 50%; width: 20px; height: 20px;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: .75rem; font-weight: 700;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, #1A1207 0%, #2D1F0A 50%, #3D2B0F 100%);
+      min-height: 500px; display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      text-align: center; padding: 3rem 1rem;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url('images/draa-tafilalet.jpg') center/cover no-repeat;
+      opacity: .18;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 700px; }
+    .hero-badge {
+      display: inline-block; background: var(--terracotta);
+      color: #fff; font-size: .78rem; letter-spacing: 2px;
+      text-transform: uppercase; padding: .35rem 1rem; border-radius: 2px;
+      margin-bottom: 1.2rem;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      color: #fff; line-height: 1.15; margin-bottom: 1rem;
+    }
+    .hero h1 em { color: var(--sand); font-style: italic; }
+    .hero p { color: #c9b99a; font-size: 1.05rem; line-height: 1.7; margin-bottom: 2rem; }
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--sand); color: var(--dark);
+      border: none; padding: .75rem 2rem; border-radius: 4px;
+      font-family: 'Lato', sans-serif; font-weight: 700; font-size: .95rem;
+      cursor: pointer; transition: background .2s;
+    }
+    .btn-primary:hover { background: var(--deep-sand); color: #fff; }
+    .btn-outline {
+      background: transparent; color: var(--sand);
+      border: 1.5px solid var(--sand); padding: .75rem 2rem; border-radius: 4px;
+      font-family: 'Lato', sans-serif; font-weight: 700; font-size: .95rem;
+      cursor: pointer; transition: all .2s;
+    }
+    .btn-outline:hover { background: var(--sand); color: var(--dark); }
+
+    /* ── REGION STRIP ── */
+    .region-strip {
+      background: var(--terracotta);
+      display: flex; justify-content: center; gap: 3rem;
+      padding: .75rem 1rem; flex-wrap: wrap;
+    }
+    .region-strip span { color: #fff; font-size: .82rem; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700; }
+
+    /* ── FILTERS / SEARCH ── */
+    .shop-header {
+      max-width: 1200px; margin: 3rem auto 2rem; padding: 0 1.5rem;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    }
+    .shop-header h2 { font-family: 'Playfair Display', serif; font-size: 2rem; }
+    .search-bar {
+      display: flex; gap: .5rem;
+    }
+    .search-bar input {
+      border: 1.5px solid var(--border); border-radius: 4px;
+      padding: .5rem 1rem; font-size: .9rem; font-family: 'Lato', sans-serif;
+      background: var(--card-bg); min-width: 220px;
+    }
+    .search-bar input:focus { outline: none; border-color: var(--sand); }
+    .filter-tabs {
+      max-width: 1200px; margin: 0 auto 2rem; padding: 0 1.5rem;
+      display: flex; gap: .6rem; flex-wrap: wrap;
+    }
+    .filter-tab {
+      border: 1.5px solid var(--border); background: var(--card-bg);
+      border-radius: 50px; padding: .38rem 1.1rem; font-size: .83rem;
+      cursor: pointer; transition: all .2s; font-family: 'Lato', sans-serif;
+    }
+    .filter-tab:hover, .filter-tab.active {
+      background: var(--dark); color: var(--sand); border-color: var(--dark);
+    }
+
+    /* ── GRID ── */
+    .products-grid {
+      max-width: 1200px; margin: 0 auto 4rem; padding: 0 1.5rem;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 1.8rem;
+    }
+    .product-card {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 8px; overflow: hidden; position: relative;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,.1); }
+    .product-img {
+      width: 100%; height: 220px; object-fit: cover; display: block;
+      background: #e8dcc8;
+    }
+    .badge-origin {
+      position: absolute; top: 10px; left: 10px;
+      background: var(--terracotta); color: #fff;
+      font-size: .7rem; letter-spacing: 1px; text-transform: uppercase;
+      padding: .25rem .6rem; border-radius: 2px;
+    }
+    .badge-new {
+      position: absolute; top: 10px; right: 10px;
+      background: var(--sand); color: var(--dark);
+      font-size: .7rem; letter-spacing: 1px; text-transform: uppercase;
+      padding: .25rem .6rem; border-radius: 2px;
+    }
+    .card-body { padding: 1rem 1.2rem 1.2rem; }
+    .card-category { font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: .3rem; }
+    .card-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; margin-bottom: .25rem; }
+    .card-origin { font-size: .78rem; color: var(--muted); margin-bottom: .6rem; }
+    .card-rating { display: flex; gap: 2px; align-items: center; margin-bottom: .7rem; }
+    .star { color: var(--sand); font-size: .85rem; }
+    .rating-count { font-size: .75rem; color: var(--muted); margin-left: .2rem; }
+    .card-bottom { display: flex; align-items: center; justify-content: space-between; }
+    .card-price { font-size: 1.2rem; font-weight: 700; color: var(--terracotta); }
+    .card-price-old { font-size: .8rem; color: var(--muted); text-decoration: line-through; }
+    .add-to-cart {
+      background: var(--dark); color: var(--sand);
+      border: none; border-radius: 4px; padding: .45rem .9rem;
+      font-size: .82rem; cursor: pointer; font-family: 'Lato', sans-serif;
+      transition: background .2s;
+    }
+    .add-to-cart:hover { background: var(--terracotta); color: #fff; }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+      background: var(--dark); color: var(--sand);
+      padding: .8rem 1.4rem; border-radius: 6px; font-size: .88rem;
+      opacity: 0; transform: translateY(10px);
+      transition: all .3s; pointer-events: none;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    /* ── CART MODAL ── */
+    .overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 200;
+      display: none; align-items: flex-start; justify-content: flex-end;
+    }
+    .overlay.open { display: flex; }
+    .cart-panel {
+      background: var(--card-bg); width: 420px; max-width: 100vw;
+      height: 100vh; overflow-y: auto; padding: 2rem;
+      box-shadow: -4px 0 24px rgba(0,0,0,.2);
+    }
+    .cart-panel h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 1.5rem; }
+    .cart-item { display: flex; gap: 1rem; padding: .8rem 0; border-bottom: 1px solid var(--border); align-items: center; }
+    .cart-item img { width: 64px; height: 64px; object-fit: cover; border-radius: 4px; }
+    .ci-info { flex: 1; }
+    .ci-name { font-size: .9rem; font-weight: 700; }
+    .ci-price { font-size: .85rem; color: var(--terracotta); margin-top: .2rem; }
+    .ci-remove { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 1.1rem; }
+    .cart-total { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin: 1.5rem 0 1rem; }
+    .checkout-btn {
+      width: 100%; background: var(--terracotta); color: #fff;
+      border: none; padding: .85rem; border-radius: 6px;
+      font-family: 'Lato', sans-serif; font-size: 1rem; font-weight: 700;
+      cursor: pointer; transition: background .2s;
+    }
+    .checkout-btn:hover { background: #9a4a2a; }
+    .close-cart { background: none; border: none; cursor: pointer; font-size: 1.4rem; float: right; }
+
+    /* ── FEATURES ── */
+    .features {
+      background: var(--dark); color: #e8d8b8;
+      display: flex; justify-content: center; flex-wrap: wrap; gap: 0;
+    }
+    .feature { padding: 2rem 2.5rem; text-align: center; flex: 1; min-width: 200px; border-right: 1px solid #2d2010; }
+    .feature:last-child { border-right: none; }
+    .feature-icon { font-size: 2rem; margin-bottom: .5rem; }
+    .feature h4 { font-family: 'Playfair Display', serif; color: var(--sand); margin-bottom: .3rem; }
+    .feature p { font-size: .82rem; color: #9a8870; line-height: 1.5; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #111; color: #7a6a50; text-align: center;
+      padding: 1.5rem; font-size: .82rem;
+    }
+    footer a { color: var(--sand); text-decoration: none; }
+
+    /* ── EMPTY STATE ── */
+    .empty { grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--muted); font-style: italic; }
+
+    @media (max-width: 720px) {
+      nav { padding: 0 1rem; }
+      .nav-links { display: none; }
+      .hero h1 { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Bazar<span>Luxe</span></div>
+  <ul class="nav-links">
+    <li><a href="#boutique">Boutique</a></li>
+    <li><a href="#about">Notre Région</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="cart-btn" onclick="toggleCart()">
+      🛒 Panier <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">✦ Artisanat Authentique</div>
+    <h1>Les Trésors de la <em>Drâa-Tafilalet</em></h1>
+    <p>Découvrez les produits territoriaux authentiques de la région du Drâa-Tafilalet : dattes, huile d'argan, roses de Kelâat M'Gouna, safran de Taliouine et bien plus encore.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="document.getElementById('boutique').scrollIntoView({behavior:'smooth'})">Explorer la Boutique</button>
+      <button class="btn-outline" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">Notre Histoire</button>
+    </div>
+  </div>
+</section>
+
+<!-- REGION STRIP -->
+<div class="region-strip">
+  <span> Zagora</span>
+  <span> Kelâat M'Gouna</span>
+  <span> Taliouine</span>
+  <span> Errachidia</span>
+  <span> Ouarzazate</span>
+  <span> Tinghir</span>
+</div>
+
+<!-- FEATURES -->
+<div class="features">
+  <div class="feature"><div class="feature-icon"></div><h4>100% Authentique</h4><p>Produits certifiés directement des artisans locaux</p></div>
+  <div class="feature"><div class="feature-icon"></div><h4>Livraison Nationale</h4><p>Expédition vers toutes les villes du Maroc</p></div>
+  <div class="feature"><div class="feature-icon"></div><h4>Commerce Équitable</h4><p>Revenus directs aux producteurs de la région</p></div>
+  <div class="feature"><div class="feature-icon"></div><h4>Paiement Sécurisé</h4><p>Transactions protégées et données confidentielles</p></div>
+</div>
+
+<!-- BOUTIQUE -->
+<section id="boutique">
+  <div class="shop-header">
+    <h2>Notre Boutique</h2>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Rechercher un produit…" oninput="renderProducts()" />
+    </div>
+  </div>
+
+  <div class="filter-tabs" id="filterTabs">
+    <button class="filter-tab active" onclick="setFilter('Tous', this)">Tous</button>
+    <button class="filter-tab" onclick="setFilter('Dattes', this)">Dattes</button>
+    <button class="filter-tab" onclick="setFilter('Huiles', this)">Huiles</button>
+    <button class="filter-tab" onclick="setFilter('Roses', this)">Roses & Parfums</button>
+    <button class="filter-tab" onclick="setFilter('Safran', this)">Safran & Épices</button>
+    <button class="filter-tab" onclick="setFilter('Artisanat', this)">Artisanat</button>
+    <button class="filter-tab" onclick="setFilter('Cosmétiques', this)">Cosmétiques</button>
+    <button class="filter-tab" onclick="setFilter('Alimentation', this)">Alimentation</button>
+  </div>
+
+  <div class="products-grid" id="productsGrid"></div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" style="background:var(--dark);color:#e8d8b8;padding:4rem 1.5rem;text-align:center;">
+  <div style="max-width:700px;margin:auto;">
+    <h2 style="font-family:'Playfair Display',serif;font-size:2.2rem;color:var(--sand);margin-bottom:1rem;">La Région Drâa-Tafilalet</h2>
+    <p style="line-height:1.8;color:#b8a888;font-size:1.02rem;">
+      Nichée entre les dunes  et les gorges de Todgha, la région Drâa-Tafilalet est le berceau 
+      d'une biodiversité exceptionnelle et d'un savoir-faire artisanal millénaire. Ses oasis verdoyantes 
+      produisent les meilleures dattes du monde, ses vallées de roses parfument l'industrie cosmétique mondiale, 
+      et ses coopératives féminines perpétuent les traditions de l'argan et du safran.
+    </p>
+    <div style="display:flex;justify-content:center;gap:3rem;margin-top:2.5rem;flex-wrap:wrap;">
+      <div><div style="font-family:'Playfair Display',serif;font-size:2.5rem;color:var(--sand);">6</div><div style="font-size:.85rem;color:#9a8870;">Provinces</div></div>
+      <div><div style="font-family:'Playfair Display',serif;font-size:2.5rem;color:var(--sand);">30+</div><div style="font-size:.85rem;color:#9a8870;">Produits Locaux</div></div>
+      <div><div style="font-family:'Playfair Display',serif;font-size:2.5rem;color:var(--sand);">200+</div><div style="font-size:.85rem;color:#9a8870;">Artisans Partenaires</div></div>
+      <div><div style="font-family:'Playfair Display',serif;font-size:2.5rem;color:var(--sand);">15 ans</div><div style="font-size:.85rem;color:#9a8870;">d'Expérience</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="padding:3rem 1.5rem;max-width:700px;margin:auto;text-align:center;">
+  <h2 style="font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:.7rem;">Contactez-nous</h2>
+  <p style="color:var(--muted);margin-bottom:1.5rem;">Des questions sur nos produits ? Notre équipe est là pour vous aider.</p>
+  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;color:var(--muted);font-size:.9rem;">
+    <span>📧 contact@bazarluxe.ma</span>
+    <span>📞 +212 500-000000</span>
+    <span>📍  Errachidia, Maroc</span>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 BazarLuxe – Produits Territoriaux Drâa-Tafilalet · <a href="#">Mentions légales</a> · <a href="#">Politique de confidentialité</a></p>
+  
+</footer>
+
+<!-- CART OVERLAY -->
+<div class="overlay" id="cartOverlay" onclick="closeCartOnBg(event)">
+  <div class="cart-panel">
+    <button class="close-cart" onclick="toggleCart()">✕</button>
+    <h3>🛒 Mon Panier</h3>
+    <div id="cartItems"></div>
+    <div id="cartTotal" class="cart-total" style="display:none"></div>
+    <button class="checkout-btn" id="checkoutBtn" style="display:none" onclick="checkout()">Passer la Commande</button>
+    <p id="cartEmpty" style="color:var(--muted);font-style:italic;text-align:center;padding:2rem 0;">Votre panier est vide.</p>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── PRODUCT DATABASE ───
+const products = [
+  { id:1, name:"Dattes Medjool Premium", category:"Dattes", origin:"Zagora", price:85, oldPrice:110, rating:5, reviews:142, img:"https://resize.prod.femina.ladmedia.fr/rblr/652,438/img/var/2023-12/datte.jpg", isNew:true },
+  { id:2, name:"Dattes Boufeggous Bio", category:"Dattes", origin:"Errachidia", price:55, rating:4, reviews:89, img:"images/datte_err.jpeg" },
+  { id:3, name:"Dattes Mejhoul Géantes", category:"Dattes", origin:"Drâa", price:95, oldPrice:120, rating:5, reviews:201, img:"images/datte_draa.jpeg" },
+  { id:4, name:"Huile d'Argan Cosmétique", category:"Huiles", origin:"Agdz", price:120, rating:5, reviews:315, img:"images/argan.jpeg", isNew:false },
+  { id:5, name:"Huile d'Argan Alimentaire", category:"Huiles", origin:"Ouarzazate", price:95, rating:5, reviews:178, img:"images/argan_.jpg" },
+  { id:6, name:"Eau de Rose Pure", category:"Roses", origin:"Kelâat M'Gouna", price:45, rating:4, reviews:93, img:"images/eau-de-rose.jpg" },
+  { id:7, name:"Pétales de Roses Séchées", category:"Roses", origin:"Kelâat M'Gouna", price:35, rating:4, reviews:67, img:"images/rose.jpeg", isNew:true },
+  { id:8, name:"Huile Essentielle de Rose", category:"Roses", origin:"Kelâat M'Gouna", price:180, oldPrice:220, rating:5, reviews:54, img:"images/rose_.jpeg" },
+  { id:9, name:"Safran Premium de Taliouine", category:"Safran", origin:"Taliouine", price:250, rating:5, reviews:421, img:"images/safran.jpeg", isNew:true },
+  { id:10, name:"Ras el Hanout Artisanal", category:"Safran", origin:"Ouarzazate", price:38, rating:4, reviews:156, img:"images/ras_lhanot.jpeg" },
+  { id:11, name:"Cumin Bio du Drâa", category:"Alimentation", origin:"Zagora", price:22, rating:4, reviews:88, img:"images/kamons.jpeg" },
+  { id:12, name:"Miel de Jujube", category:"Alimentation", origin:"Tinghir", price:75, oldPrice:90, rating:5, reviews:133, img:"images/jujpe.jpeg" },
+  { id:13, name:"Henné Naturel Poudre", category:"Cosmétiques", origin:"Zagora", price:28, rating:4, reviews:77, img:"images/henna.jpeg" },
+  { id:14, name:"Savon Beldi à l'Argan", category:"Cosmétiques", origin:"Ouarzazate", price:32, rating:4, reviews:99, img:"images/sabon.jpeg", isNew:true },
+  { id:15, name:"Crème Visage Argan & Rose", category:"Cosmétiques", origin:"Kelâat M'Gouna", price:85, oldPrice:100, rating:5, reviews:187, img:"images/masque.jpeg" },
+  { id:16, name:"Tapis Berbère Kilim", category:"Artisanat", origin:"Ouarzazate", price:650, rating:5, reviews:45, img:"images/zarbiya.jpeg" },
+  { id:17, name:"Poterie de Tamegroute", category:"Artisanat", origin:"Zagora", price:145, rating:5, reviews:62, img:"images/caption.jpg", isNew:true },
+  { id:18, name:"Panier Tressé en Alfa", category:"Artisanat", origin:"Errachidia", price:80, rating:4, reviews:41, img:"images/panier.jpg" },
+  { id:20, name:"Figue Sèche de Tafilalet", category:"Alimentation", origin:"Errachidia", price:42, rating:4, reviews:73, img:"images/Tazart.jpeg" },
+  { id:21, name:"Noix Rare de Tigaz", category:"Alimentation", origin:"Tinghir", price:55, rating:4, reviews:38, img:"images/garga3.jpeg" },
+  { id:22, name:"Tisane Berbère Relaxante", category:"Alimentation", origin:"Ouarzazate", price:25, rating:4, reviews:91, img:"images/tisane.jpeg" },
+  { id:23, name:"Couscous Artisanal Complet", category:"Alimentation", origin:"Zagora", price:30, rating:5, reviews:104, img:"images/couscous.jpeg" },
+  { id:24, name:"Huile d'Olive Vierge Extra", category:"Huiles", origin:"Ouarzazate", price:70, oldPrice:85, rating:5, reviews:167, img:"images/huiles.jpeg" },
+  { id:25, name:"Savon Noire Hammam", category:"Cosmétiques", origin:"Drâa", price:22, rating:4, reviews:120, img:"images/savon.jpeg" },
+  { id:27, name:"Encens Myrrhe Naturel", category:"Artisanat", origin:"Zagora", price:35, rating:4, reviews:57, img:"images/encens.jpeg" },
+  { id:28, name:"Tadelakt Décoratif", category:"Artisanat", origin:"Ouarzazate", price:120, rating:5, reviews:29, img:"images/déco.jpeg", isNew:true },
+  { id:29, name:"Poivre Noir de Drâa", category:"Safran", origin:"Drâa", price:30, rating:4, reviews:63, img:"images/poivre.jpeg" },
+  { id:30, name:"Thé Vert à la Menthe Séché", category:"Alimentation", origin:"Errachidia", price:20, rating:5, reviews:195, img:"images/thé.jpeg" },
+];
+
+let cart = [];
+let currentFilter = 'Tous';
+
+function stars(n) {
+  return '★'.repeat(n) + '☆'.repeat(5 - n);
+}
+
+function setFilter(cat, el) {
+  currentFilter = cat;
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  renderProducts();
+}
+
+function renderProducts() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const grid = document.getElementById('productsGrid');
+  const filtered = products.filter(p => {
+    const matchCat = currentFilter === 'Tous' || p.category === currentFilter;
+    const matchQ = !q || p.name.toLowerCase().includes(q) || p.origin.toLowerCase().includes(q);
+    return matchCat && matchQ;
+  });
+
+  if (!filtered.length) {
+    grid.innerHTML = '<p class="empty">Aucun produit trouvé.</p>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map(p => `
+    <div class="product-card">
+      <img class="product-img" src="${p.img}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/400x220/C9A96E/1A1207?text=${encodeURIComponent(p.name)}'" />
+      <span class="badge-origin">${p.origin}</span>
+      ${p.isNew ? '<span class="badge-new">Nouveau</span>' : ''}
+      <div class="card-body">
+        <div class="card-category">${p.category}</div>
+        <div class="card-title">${p.name}</div>
+        <div class="card-origin"> ${p.origin}, Drâa-Tafilalet</div>
+        <div class="card-rating">
+          <span class="star">${stars(p.rating)}</span>
+          <span class="rating-count">(${p.reviews} avis)</span>
+        </div>
+        <div class="card-bottom">
+          <div>
+            <div class="card-price">${p.price} MAD</div>
+            ${p.oldPrice ? `<div class="card-price-old">${p.oldPrice} MAD</div>` : ''}
+          </div>
+          <button class="add-to-cart" onclick="addToCart(${p.id})">+ Ajouter</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function addToCart(id) {
+  const p = products.find(x => x.id === id);
+  const existing = cart.find(x => x.id === id);
+  if (existing) existing.qty++;
+  else cart.push({ ...p, qty: 1 });
+  updateCartCount();
+  showToast(`✓ ${p.name} ajouté au panier`);
+}
+
+function updateCartCount() {
+  document.getElementById('cartCount').textContent = cart.reduce((s, i) => s + i.qty, 0);
+}
+
+function toggleCart() {
+  document.getElementById('cartOverlay').classList.toggle('open');
+  renderCart();
+}
+
+function closeCartOnBg(e) {
+  if (e.target === document.getElementById('cartOverlay')) toggleCart();
+}
+
+function renderCart() {
+  const el = document.getElementById('cartItems');
+  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  document.getElementById('cartEmpty').style.display = cart.length ? 'none' : '';
+  document.getElementById('cartTotal').style.display = cart.length ? '' : 'none';
+  document.getElementById('checkoutBtn').style.display = cart.length ? '' : 'none';
+  document.getElementById('cartTotal').textContent = `Total : ${total} MAD`;
+  el.innerHTML = cart.map(i => `
+    <div class="cart-item">
+      <img src="${i.img}" alt="${i.name}" onerror="this.style.background='#e8dcc8'" />
+      <div class="ci-info">
+        <div class="ci-name">${i.name}</div>
+        <div class="ci-price">${i.price} MAD × ${i.qty}</div>
+      </div>
+      <button class="ci-remove" onclick="removeFromCart(${i.id})">✕</button>
+    </div>
+  `).join('');
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(x => x.id !== id);
+  updateCartCount();
+  renderCart();
+}
+
+function checkout() {
+  showToast('🎉 Commande passée avec succès ! Merci.');
+  cart = [];
+  updateCartCount();
+  renderCart();
+  document.getElementById('cartOverlay').classList.remove('open');
+}
+
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// Init
+renderProducts();
+</script>
+</body>
+</html>
